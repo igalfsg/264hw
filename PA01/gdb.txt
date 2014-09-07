@@ -1,0 +1,17 @@
+Breakpoint 1 at 0x400790: file pa01.c, line 59.
+Starting program: /home/shay/a/iflegman/ECE264/Solutions/PA01/pa01 
+
+Program exited normally.
+Missing separate debuginfos, use: debuginfo-install glibc-2.12-1.132.el6_5.3.x86_64
+No symbol "argc" in current context.
+Breakpoint 2 at 0x4008f1: file pa01.c, line 96.
+Starting program: /home/shay/a/iflegman/ECE264/Solutions/PA01/pa01 
+
+Breakpoint 2, main (argc=1, argv=0x7fffffffe518) at pa01.c:96
+96	    printf("Welcome to ECE264, we are working on PA01.\n\n");
+$1 = 1
+102	    return EXIT_SUCCESS;
+103	}
+Continuing.
+
+Program exited normally.

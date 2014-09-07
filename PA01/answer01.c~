@@ -1,0 +1,74 @@
+#include <stdlib.h>
+#include "answer01.h"
+
+int arraySum(int * array, int len)
+{
+  int index;
+  int sum = 0;
+  
+  for (index = 0; index < len; index++)
+    {
+      sum += array[index];
+    }
+  return sum;
+
+}
+
+int arrayCountNegative(int * array, int len)
+{
+  int count = 0;
+  int index;
+ 
+  for (index = 0; index < len; index++)
+    {
+      if (array[index] < 0)
+	{
+	count++
+        }
+    }
+    return count;
+}
+
+int arrayIsIncreasing(int * array, int len)
+{   
+  int index;
+  int increasing = 1;
+  
+  for (index = 1; index < len; index++)
+    {
+      if (array[index] < array[index - 1])
+	{
+	  increasing = 0;
+	}
+    }
+    return increasing;
+}
+
+int arrayIndexRFind(int needle, const int * haystack, int len)
+{
+  int idx = -1;
+  int index;
+  
+  for (index = 0; index < len; index++)
+    {
+      if (haystack[index] == needle)
+	{
+	  idx = index;
+	}
+    }
+    return idx;
+}
+
+int arrayFindSmallest(int * array, int len)
+{
+  int index;
+  int small = array[0];
+  int idx = 0;
+  for (index=1; index < len; index++)
+    {
+      if (array[index] < small){
+	idx = index; //make idx = to the index
+      }
+    }
+    return idx;
+}
