@@ -69,6 +69,10 @@ char * my_strrchr (const char * str, int ch)
   return point;
 }
 
+char * my_strstr(const char * haystack, const char * needle)
+{
+
+}
 char * my_strcpy(char * dest, const char * src)
 {
   int index = 0;
@@ -81,3 +85,19 @@ char * my_strcpy(char * dest, const char * src)
   return dest;
 }
 
+char * my_strcat(char * dest, const char * src)
+{
+  int secin = 0;
+  int index = 0;
+  while (dest[index] != '\0')
+    {
+    }
+  while(str[secin] != '\0')
+    {
+      dest[index] = str[secin];
+      index++;
+      secin++;
+    }
+  dest[index] = '\0';
+  return dest;
+}
