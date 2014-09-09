@@ -26,3 +26,7 @@ int my_countchar (const char * str, char ch)
   return count;
 }
 
+char * my_strchr (const * str, int ch)
+{
+  
+}
