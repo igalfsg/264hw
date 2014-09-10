@@ -68,6 +68,18 @@ char * my_strrchr (const char * str, int ch)
     } 
   return point;
 }
+/*
+char * my_strstr(const char * haystack, const char * needle)
+{
+  char * point = NULL;
+  int index = 0;
+  int secondi = 0;
+  int tempindex = 0;
+
+*/
+
+
+
 
 char * my_strstr(const char * haystack, const char * needle)
 {
@@ -119,7 +131,8 @@ char * my_strcat(char * dest, const char * src)
   int secin = 0;
   int index = 0;
   while (dest[index] != '\0')
-    {//go to the finish of the string
+    {
+      index++;//go to the finish of the string
     }
   while(src[secin] != '\0')
     {
@@ -166,7 +179,9 @@ int my_atoi (const char * str)
     {
       ret *= 10;
       ret += str[index];
+      ret -= 48;
       index++;
     }
+  ret = ret * multiplier;
   return ret;
 }
