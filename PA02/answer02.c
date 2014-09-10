@@ -71,14 +71,43 @@ char * my_strrchr (const char * str, int ch)
 
 char * my_strstr(const char * haystack, const char * needle)
 {
+  char * point = NULL;
+  int index = 0;
+  int secondi = 0;
+  int tempindex = 0;
+  if (needle == '\0')
+    {
+      point = (char *)&haystack[index];
+      return point;
+    }
+  while (haystack[index] != '\0')
+    {
+      if (haystack[index] == needle[secondi])
+        {
+	  tempindex = index;
+	  while (needle[secondi] != '\0' && needle[secondi] == haystack[index])
+	    {
+	      secondi++;
+	      tempindex++;
+	    }   
+	  if (needle[secondi] == '\0')
+	    {
+	      point = (char *)&haystack[index];
+	      return point;
+	    }
+	  secondi = 0;
+        }
+      index ++;
+    }
+      return point;
 
 }
 char * my_strcpy(char * dest, const char * src)
 {
   int index = 0;
-  while (str[index] != '\0')
+  while (src[index] != '\0')
     {
-      dest[index] = str[index];
+      dest[index] = src[index];
       index ++;
     }
   dest[index] = '\0';
@@ -90,14 +119,32 @@ char * my_strcat(char * dest, const char * src)
   int secin = 0;
   int index = 0;
   while (dest[index] != '\0')
-    {
+    {//go to the finish of the string
     }
-  while(str[secin] != '\0')
+  while(src[secin] != '\0')
     {
-      dest[index] = str[secin];
+      dest[index] = src[secin];//copy the next string
       index++;
       secin++;
     }
   dest[index] = '\0';
   return dest;
 }
+
+int my_isspace (int ch)
+{
+  if (ch < 14 && ch > 9)
+    {
+      return 1;
+    }
+  else if ( ch == 32)
+    {
+      return 1;
+    }
+  else 
+    {
+      return 0;
+    }
+}
+
+
