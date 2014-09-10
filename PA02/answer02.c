@@ -133,7 +133,7 @@ char * my_strcat(char * dest, const char * src)
 
 int my_isspace (int ch)
 {
-  if (ch < 14 && ch > 9)
+  if (ch < 14 && ch > 8)
     {
       return 1;
     }
