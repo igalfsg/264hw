@@ -148,3 +148,25 @@ int my_isspace (int ch)
 }
 
 
+int my_atoi (const char * str)
+{
+  int multiplier = 1;
+  int index = 0;
+  int ret = 0;
+  while (my_isspace(str[index]) == 1)
+    {
+      index++;
+    }
+  if (str[index] == '-')
+    {
+      multiplier = -1;
+      index++;
+    }
+  while (str[index] >= '0' && str[index] <= '9')
+    {
+      ret *= 10;
+      ret += str[index];
+      index++;
+    }
+  return ret;
+}
