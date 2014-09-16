@@ -14,6 +14,13 @@ int main(int argc, char * * argv)
 	strcpy(name, "hello");
 	strcpy(nam2, "test");
 	name = strcat_ex(&name, tes, nam2);
-	printf(" answerr %s \n",name); 
+	const char * naming = "please work im beggin";
+	printf(" answerr %s \n",name);
+	const char * spaces =  " ";
+	char ** testing = explode(naming, spaces, tes);
 	return 0;
+	for (try = 0; try <3; try++)
+	  {
+	    printf("test %s \n",testing[try]);
+	  }
 }

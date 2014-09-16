@@ -87,7 +87,7 @@ char * my_strstr(const char * haystack, const char * needle)
   int index = 0;
   int secondi = 0;
   int tempindex = 0;
-  if (needle == '\0')
+  if (*needle == '\0')
     {
       point = (char *)&haystack[index];
       return point;
@@ -97,7 +97,7 @@ char * my_strstr(const char * haystack, const char * needle)
       if (haystack[index] == needle[secondi])
         {
 	  tempindex = index;
-	  while (needle[secondi] != '\0' && needle[secondi] == haystack[index])
+	  while (needle[secondi] != '\0' && needle[secondi] == haystack[tempindex])
 	    {
 	      secondi++;
 	      tempindex++;

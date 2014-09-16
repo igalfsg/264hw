@@ -1,0 +1,11 @@
+Breakpoint 1 at 0x400985: file answer02.c, line 91.
+Starting program: /home/shay/a/iflegman/ECE264/Solutions/PA02/pa02 
+
+Breakpoint 1, my_strstr (haystack=0x400e00 "Hello World!", needle=0x400e0d "") at answer02.c:92
+92	      point = (char *)&haystack[index];
+$1 = 0x0
+93	      return point;
+116	}
+Continuing.
+
+Program exited normally.

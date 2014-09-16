@@ -25,17 +25,33 @@ char * strcat_ex(char * * dest, int * n, const char * src)
 
 char * * explode(const char * str, const char * delims, int * arrLen)
 {
-  int index = 0; 
+  int ind = 0; 
   int numdelim = 0;
-  while (str[index] != '\0')
+  int letters = 0;
+  char * first; 
+  int destindex = 0;
+  while (str[ind] != '\0')
     {//count delimeters
-      if ((strchr(delims,str[index])) != NULL)
+      if ((strchr(delims,str[ind])) != NULL)
 	{
 	numdelim++; //add another delimeter to the count
 	}
-      index++;
+      ind++;
     }//end counting of delimeters
-
-return str;
+  ind = 0;
+  char ** dest = malloc((numdelim + 1) * sizeof(char*));
+  while (str[ind] != '\0')
+    {
+      letters = 0;
+      first = (char *)str; 
+      first += ind;
+      while ((strchr(delims,str[ind])) == NULL)
+	{
+	  letters++;
+	  ind++;
+	}
+      memcpy(dest[destindex],first, letters);
+    }
+return dest;
 }
 
