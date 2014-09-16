@@ -5,12 +5,12 @@
 
 // This does not work... fix it.
 // Hint: look up swap(int *, int *) in the course notes
-void swapString(  const char * * a,   const char * *  b)
+void swapString(  const char  * * a,   const char * *  b)
 {
   
-  const char * tmp =   (char *) a;
-  * a = (char *) b;
-  * b = (char *) tmp;
+  const char * tmp =   * a;
+  * a = * b;
+  * b =  tmp;
     printf("Calling swapString(...)\n");
     printf("&a = %p\n", &a);
     printf("&b = %p\n", &b);
