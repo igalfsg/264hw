@@ -28,8 +28,8 @@ char * * explode(const char * str, const char * delims, int * arrLen)
   int ind = 0; 
   int numdelim = 0;
   int letters = 0;
-  char * first; 
-  int destindex = 0;
+  const char * first; 
+  int tempind = 0;
   while (str[ind] != '\0')
     {//count delimeters
       if ((strchr(delims,str[ind])) != NULL)
@@ -38,20 +38,37 @@ char * * explode(const char * str, const char * delims, int * arrLen)
 	}
       ind++;
     }//end counting of delimeters
-  ind = 0;
   char ** dest = malloc((numdelim + 1) * sizeof(char*));
-  while (str[ind] != '\0')
+  first = str;
+  for(ind = 0; ind < numdelim; ind ++){
+     
+    while ((strchr(delims,str[tempind])) == NULL)
+	{
+	  letters++;
+	  tempind++;
+	}
+    dest[ind] = malloc((letters + 1) * sizeof(char));
+    memcpy(dest[ind],first,(sizeof(char)*letters));
+    dest[ind][letters] = '\0';
+    tempind++;
+    first += 1 + (sizeof(char)*letters);
+    letters = 0;
+  }
+return dest;
+}
+
+//     memcpy(dest[destindex],first, letters);
+
+/*
+while (str[ind] != '\0')
     {
       letters = 0;
-      first = (char *)str; 
-      first += ind;
+      first = str[ind]; 
       while ((strchr(delims,str[ind])) == NULL)
 	{
 	  letters++;
 	  ind++;
 	}
       memcpy(dest[destindex],first, letters);
-    }
-return dest;
-}
-
+      ind++;
+      }*/

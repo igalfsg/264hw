@@ -18,9 +18,9 @@ int main(int argc, char * * argv)
 	printf(" answerr %s \n",name);
 	const char * spaces =  " ";
 	char ** testing = explode(naming, spaces, tes);
-	return 0;
 	for (try = 0; try <3; try++)
 	  {
 	    printf("test %s \n",testing[try]);
 	  }
+	return 0;
 }
