@@ -18,12 +18,12 @@ int main(int argc, char * * argv)
 	printf(" answerr %s \n",name);
 	const char * spaces =  " ";
 	char ** testing = explode(naming, spaces, tes);
-	for (try = 0; try <3; try++)
+	for (try = 0; try <4; try++)
 	  {
 	    printf("test %s \n",testing[try]);
 	  }
-	//	name = implode(testing, 4, " ");
-	//printf("testing in %s\n",name);
-	sortStringArray(testing, 4);
+		name = implode(testing, 4, " ");
+	printf("testing in %s\n",name);
+	//	sortStringArray(testing, 3);
 	return 0;
 }

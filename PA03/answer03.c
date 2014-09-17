@@ -6,7 +6,7 @@
 
 char * strcat_ex(char * * dest, int * n, const char * src)
 {
-  if (*dest == '\0' || (((strlen(*dest)) + (strlen(src)) + 1 ) > *n))
+  if (*dest == NULL || (((strlen(*dest)) + (strlen(src)) + 1 ) > *n))
     {
       *n = 1 + 2 * ((strlen(*dest)) + (strlen(src)));
       char * buffer = malloc (*n * sizeof (char));
@@ -41,7 +41,7 @@ char * * explode(const char * str, const char * delims, int * arrLen)
     }//end counting of delimeters
   char ** dest = malloc((numdelim + 1) * sizeof(char*));
   first = str;
-  for(ind = 0; ind < numdelim; ind ++){
+  for(ind = 0; ind <= numdelim; ind ++){
      
     while ((strchr(delims,str[tempind])) == NULL)
 	{
@@ -57,7 +57,7 @@ char * * explode(const char * str, const char * delims, int * arrLen)
   }
 return dest;
 }
-/*
+
 char * implode (char ** strArr, int len, const char * glue)
 {
   char * together;
@@ -74,11 +74,12 @@ char * implode (char ** strArr, int len, const char * glue)
 	}
       else
 	{
-	  together = strcat_ex(&together, prueba, '\0');
+	  // together = strcat_ex(&together, prueba, '\0');
 	}
     }
   return together;
 }
+/*
 void sortStringArray(char ** arrString, int len)
 {
   qsort(arrString, len, sizeof(char *), stringcmp);
