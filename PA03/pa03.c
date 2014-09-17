@@ -22,5 +22,8 @@ int main(int argc, char * * argv)
 	  {
 	    printf("test %s \n",testing[try]);
 	  }
+	//	name = implode(testing, 4, " ");
+	//printf("testing in %s\n",name);
+	sortStringArray(testing, 4);
 	return 0;
 }

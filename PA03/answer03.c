@@ -1,5 +1,6 @@
 #include "answer03.h"
 #include<stdio.h>
+#include<dirent.h>
 #include<stdlib.h>
 #include<string.h>
 
@@ -56,19 +57,41 @@ char * * explode(const char * str, const char * delims, int * arrLen)
   }
 return dest;
 }
-
-//     memcpy(dest[destindex],first, letters);
-
 /*
-while (str[ind] != '\0')
+char * implode (char ** strArr, int len, const char * glue)
+{
+  char * together;
+  int sizze = len;//equal it to len cause there is at least len * char
+  together = malloc(sizze * sizeof(char));
+  int ind;
+  int * prueba = &sizze;
+  for (ind = 0; ind < len; ind++)
     {
-      letters = 0;
-      first = str[ind]; 
-      while ((strchr(delims,str[ind])) == NULL)
+      together = strcat_ex(&together, prueba, strArr[ind]);
+      if ((ind + 1) != len)
 	{
-	  letters++;
-	  ind++;
+	  together = strcat_ex(&together, prueba, glue);
 	}
-      memcpy(dest[destindex],first, letters);
-      ind++;
-      }*/
+      else
+	{
+	  together = strcat_ex(&together, prueba, '\0');
+	}
+    }
+  return together;
+}
+void sortStringArray(char ** arrString, int len)
+{
+  qsort(arrString, len, sizeof(char *), stringcmp);
+}*/
+
+void destroyStringArray (char ** strArr, int len)
+{
+  if (strArr != NULL && len != 0)
+    {
+      int ind;
+      for(ind = 0; ind < len; ind ++){
+	free(strArr[ind]);
+      }
+      free(strArr);
+    }
+}
