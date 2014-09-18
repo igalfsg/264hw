@@ -22,8 +22,19 @@ int main(int argc, char * * argv)
 	  {
 	    printf("test %s \n",testing[try]);
 	  }
-		name = implode(testing, 4, " ");
+	name = implode(testing, 4, " ");
 	printf("testing in %s\n",name);
-	//	sortStringArray(testing, 3);
+	sortStringArray(testing, 4);
+	for (try = 0; try <4; try++)
+          {
+            printf(" %s",testing[try]);
+          }
+	printf("\n");
+	printf ("before" );
+	sortStringCharacters(name);
+	free(nam2);
+	free(name);
+	destroyStringArray (testing, 4);
 	return 0;
+
 }

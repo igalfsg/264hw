@@ -60,7 +60,7 @@ return dest;
 
 char * implode (char ** strArr, int len, const char * glue)
 {
-  char * together;
+  char * together = '\0';
   int sizze = len;//equal it to len cause there is at least len * char
   together = malloc(sizze * sizeof(char));
   int ind;
@@ -72,19 +72,33 @@ char * implode (char ** strArr, int len, const char * glue)
 	{
 	  together = strcat_ex(&together, prueba, glue);
 	}
-      else
-	{
-	  // together = strcat_ex(&together, prueba, '\0');
-	}
     }
   return together;
 }
-/*
+
+int stringcmp (const void *first, const void *second)
+{
+  const char **fir = (const char **)first;
+  const char **las = (const char **)second;
+  return strcmp(*fir, *las);
+}//inspired from internet browsing
+
 void sortStringArray(char ** arrString, int len)
 {
   qsort(arrString, len, sizeof(char *), stringcmp);
-}*/
-
+}
+int charcomp (const void * first, const void * second ) {
+  return strcmp((char*)first, (char*)second);
+}
+void sortStringCharacters(char * str)
+{
+  int ind = 0;
+  while (str[ind] != '\0')
+    {
+      ind++;
+    }
+  qsort(str, ind, sizeof(char),charcomp);
+}
 void destroyStringArray (char ** strArr, int len)
 {
   if (strArr != NULL && len != 0)
