@@ -6,11 +6,20 @@
 
 char * strcat_ex(char * * dest, int * n, const char * src)
 {
+  int destlen;
   if (*dest == NULL || (((strlen(*dest)) + (strlen(src)) + 1 ) > *n))
     {
-      *n = 1 + 2 * ((strlen(*dest)) + (strlen(src)));
+      if(*dest != NULL)
+	destlen = strlen(*dest);
+      else
+	destlen = 0;
+      *n = 1 + 2 * (destlen + (strlen(src)));
       char * buffer = malloc (*n * sizeof (char));
-      strcpy(buffer, *dest);
+      *buffer = '\0';
+      if (*dest != NULL)
+	{
+	  strcpy(buffer, *dest);
+	}      
       free (*dest);
       *dest = buffer;
       strcat (*dest, src);
@@ -60,9 +69,10 @@ return dest;
 
 char * implode (char ** strArr, int len, const char * glue)
 {
-  char * together = '\0';
+  //char * together = "a";
   int sizze = len;//equal it to len cause there is at least len * char
-  together = malloc(sizze * sizeof(char));
+  char * together = NULL; //malloc(sizze * sizeof(char));
+  //together = '\0';
   int ind;
   int * prueba = &sizze;
   for (ind = 0; ind < len; ind++)
