@@ -31,11 +31,20 @@ int main(int argc, char * * argv)
             printf(" %s",testing[try]);
           }
 	printf("\n");
-	printf ("before" );
 	sortStringCharacters(name);
 	free(nam2);
 	free(name);
 	destroyStringArray (testing, 4);
+	const char * str = "The\nTuring test";
+	const char * delims = " \n";
+	int n;
+	char * * strArr = explode(str, delims, &n);
+	printf ("n is: %d",n);
+	for (try = 0; try <3; try++)
+          {
+            printf("\n Igal  %s\n",strArr[try]);
+          }
+	destroyStringArray (strArr,3);
 	return 0;
 
 }

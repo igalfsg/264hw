@@ -50,6 +50,7 @@ char * * explode(const char * str, const char * delims, int * arrLen)
     }//end counting of delimeters
   char ** dest = malloc((numdelim + 1) * sizeof(char*));
   first = str;
+  *arrLen = numdelim + 1;
   for(ind = 0; ind <= numdelim; ind ++){
      
     while ((strchr(delims,str[tempind])) == NULL)
@@ -61,7 +62,7 @@ char * * explode(const char * str, const char * delims, int * arrLen)
     memcpy(dest[ind],first,(sizeof(char)*letters));
     dest[ind][letters] = '\0';
     tempind++;
-    first += 1 + (sizeof(char)*letters);
+    first +=  (sizeof(char)*(1 + letters));
     letters = 0;
   }
 return dest;
