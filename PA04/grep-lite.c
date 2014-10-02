@@ -22,13 +22,13 @@ int main(int argc, char * * argv)
    for( ; ind < argc; ++ind) {
       if(strcmp(argv[ind], "--help") == 0) 
          showHelp = TRUE;
-      if(strcmp(argv[ind][0], "-") == 0 && ind == (argc - 1))
+      if(argv[ind][0] == '-'  && ind == (argc - 1))
           badSwitch = TRUE;
-      if(strcmp(argv[ind], "-n") == 0 || strcmp (argv[ind],"--line-number"))
+      if(strcmp(argv[ind], "-n") == 0 || strcmp (argv[ind],"--line-number") == 0)
 	num = TRUE;
-      if(strcmp(argv[ind], "-q") == 0 || strcmp (argv[ind],"--quiet"))
+      if(strcmp(argv[ind], "-q") == 0 || strcmp (argv[ind],"--quiet") == 0)
 	quiet = TRUE;
-      if(strcmp(argv[ind], "-i") == 0 || strcmp (argv[ind],"--invert-match"))
+      if(strcmp(argv[ind], "-v") == 0 || strcmp (argv[ind],"--invert-match") == 0)
 	inver = TRUE;
      
    }
@@ -48,19 +48,19 @@ int main(int argc, char * * argv)
    while(fgets(buffer,2001,stdin) != NULL){
      if(!inver && strstr(buffer,argc[argv-1]) != NULL)
        {
-	 r = 1;
+	 r = 0;
 	 if(!quiet){
 	   if(num)
-	     fprintf(stdout,"%d ",line);
+	     fprintf(stdout,"%d:",line);
 	   fprintf(stdout,"%s",buffer);
 	 }
        }
      if(inver && strstr(buffer,argc[argv-1]) == NULL)
        {
-	 r = 1;
+	 r = 0;
 	 if(!quiet){
 	   if(num)
-	     fprintf(stdout,"%d ",line);
+	     fprintf(stdout,"%d:",line);
 	   fprintf(stdout,"%s",buffer);
 	 }
        }
