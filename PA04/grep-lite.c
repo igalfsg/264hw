@@ -45,7 +45,28 @@ int main(int argc, char * * argv)
       fprintf(stderr, "Aborting...\n");
       return 2;
    }
-
+   while(fgets(buffer,2001,stdin) != NULL){
+     if(!inver && strstr(buffer,argc[argv-1]) != NULL)
+       {
+	 r = 1;
+	 if(!quiet){
+	   if(num)
+	     fprintf(stdout,"%d ",line);
+	   fprintf(stdout,"%s",buffer);
+	 }
+       }
+     if(inver && strstr(buffer,argc[argv-1]) == NULL)
+       {
+	 r = 1;
+	 if(!quiet){
+	   if(num)
+	     fprintf(stdout,"%d ",line);
+	   fprintf(stdout,"%s",buffer);
+	 }
+       }
+     line++;
+   }
+	   
 
 
    return r;
