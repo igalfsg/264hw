@@ -13,19 +13,42 @@ void ppartition (int * numbers, int length)
   printf("%d\n", numbers[length - 1]);
   return;
 }
-
+ int isprime (int num)
+ {
+   int ind;
+   int count = 0;
+   for(ind =  2; ind < num; ind++)
+     {
+       if (num % ind == 0)
+	 {
+	   count++;
+	 }
+     }
+   return count;
+ }
 void partition (int * suming, int ind, int left, int fun)
 {
   if (fun == 1 || fun == 6)
     {
       int val;
+      int in;
       if (left == 0){
 	ppartition(suming, ind);
 	return;
       }
       for(val = 1; val <= left; val++)
 	{
-	  if (fun == 1 || (fun == 6 && (ind == 0 || suming[ind] - val != 0)))
+	  if(fun == 6)
+	    {
+	      if (ind == 0)
+		in  = 1;
+	      else if(suming[ind - 1] % 2 != val % 2){
+		  in = 1;
+	      }
+	      else
+	        in = 0;
+	    }
+	  if (fun == 1 || (fun == 6 && in == 1))
 	    {
 	      suming[ind] = val;
 	      partition (suming, ind + 1, left - val, fun);
@@ -85,6 +108,24 @@ void partition (int * suming, int ind, int left, int fun)
 	  partition (suming, ind + 1, left - val, fun);
 	}//insipred from the book
     }
+  else if (fun == 7)
+    {
+      int val;
+      int prime;
+      if (left == 0){
+	ppartition(suming, ind);
+	return;
+      }//insipred from the book
+      for(val = 2; val <= left; val ++)
+	{
+	  prime = isprime(val);
+	  if (prime == 0)
+	    {
+	      suming[ind] = val;
+	      partition(suming, ind + 1, left -val, fun);
+	    }
+	}
+    }
 }
 
 
@@ -142,3 +183,14 @@ void partitionOddAndEven(int value)
   free (numbers);
   return;
 }//insipred from the book
+
+void partitionPrime(int value)
+{
+  int * numbers;
+  numbers = malloc(sizeof(int)*value);
+  partition (numbers, 0, value, 7);
+  free (numbers);
+  return;
+}
+
+
