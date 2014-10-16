@@ -54,7 +54,7 @@ void explore (int x, int y, int previous, char ** maze, int countsteps, int h, i
 {
   int options = 0;
 
-  if (checknorth(x,y, maze) && y != 0)
+  if (checknorth(x,y, maze) == 1 && y != 0)
     {
       if (previous == NORTH)
 	{
@@ -68,12 +68,12 @@ void explore (int x, int y, int previous, char ** maze, int countsteps, int h, i
 	  printdirection(previous, countsteps);
 	  maze[y][x] = '.';
 	  options++;
-	  explore(x, y - 1, NORTH, maze,0, h, w);
+	  explore(x, y - 1, NORTH, maze,1, h, w);
 	  printf("S %d\n", countsteps);
 	}
     }
 
-  if (checksouth(x,y, maze) && y < h)
+  if (checksouth(x,y, maze) == 1 && y < h - 1)
     {
       if (previous == SOUTH)
 	{
@@ -87,51 +87,51 @@ void explore (int x, int y, int previous, char ** maze, int countsteps, int h, i
 	  printdirection(previous, countsteps);
 	  maze[y][x] = '.';
 	  options++;
-	  explore(x, y + 1, SOUTH, maze,0, h ,w);
+	  explore(x, y + 1, SOUTH, maze,1, h ,w);
 	  printf("N %d\n", countsteps);
 	}
     }
-  if (checkeast(x,y, maze) && x < w)
+  if (checkeast(x,y, maze) == 1 && x < w - 1)
     {
       if (previous == EAST)
 	{
 	  countsteps++;
 	  maze[y][x] = '.';
 	  options++;
-	  explore(x, y + 1, EAST, maze,countsteps, h, w);
+	  explore(x + 1, y , EAST, maze,countsteps, h, w);
 	}
       else
 	{
 	  printdirection(previous, countsteps);
 	  maze[y][x] = '.';
 	  options++;
-	  explore(x, y + 1, EAST, maze,0, h ,w);
+	  explore(x + 1, y, EAST, maze,1, h ,w);
 	  printf("W %d\n", countsteps);
 	}
     }
-  if (checkwest(x,y, maze) && x != 0)
+  if (checkwest(x,y, maze) == 1 && x != 0)
     {
       if (previous == WEST)
 	{
 	  countsteps++;
 	  maze[y][x] = '.';
 	  options++;
-	  explore(x, y + 1, WEST, maze,countsteps, h, w);
+	  explore(x - 1, y , WEST, maze,countsteps, h, w);
 	}
       else
 	{
 	  printdirection(previous, countsteps);
 	  maze[y][x] = '.';
 	  options++;
-	  explore(x, y + 1, WEST, maze,0, h ,w);
+	  explore(x - 1, y,WEST, maze,1, h ,w);
 	  printf("E %d\n", countsteps);
 	}
     }
   if(options == 0)
     {
-      printdirection(previous,countsteps);
+      printdirection(previous,countsteps + 1);
       previous *= -1;
-      printdirection(previous,countsteps);
+      printdirection(previous,countsteps + 1);
     }
 }
 
@@ -141,15 +141,17 @@ void print_directions(char** maze, int w, int h)
   int out = 0;
   int x;
   int y = 1;
-  while (i < w || out == 1)
+  while (i < w && out == 0)
     {
     if (maze[0][i] == ' ')
       {
 	x = i;
 	maze[0][i] = '.';
 	out = 1;
+	printf("S 1");
       }
+    i++;
     }// enter the maze
-  explore (x, y, 7, maze, 0, h, w);
+  explore (x, y, SOUTH, maze, 0, h, w);
 
 }
