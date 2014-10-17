@@ -50,36 +50,38 @@ int checkwest (int x, int y, char ** maze)
     return 0;
 }
 
-int checknorth1 (int x, int y, char ** maze)
-{
-  if(maze[--y][x] != 'X')
-    return 1;
-  else
-    return 0;
-}
+/* int checknorth1 (int x, int y, char ** maze) */
+/* { */
+/*   if(maze[--y][x] != 'X') */
+/*     return 1; */
+/*   else */
+/*     return 0; */
+/* } */
 
-int checksouth1 (int x, int y, char ** maze)
-{
-  if(maze[++y][x] != 'X')
-    return 1;
-  else
-    return 0;
-}
-int checkeast1 (int x, int y, char ** maze)
-{
-  if(maze[y][++x] != 'X')
-    return 1;
-  else
-    return 0;
-}
+/* int checksouth1 (int x, int y, char ** maze) */
+/* { */
+/*   if(maze[++y][x] != 'X') */
+/*     return 1; */
+/*   else */
+/*     return 0; */
+/* } */
+/* int checkeast1 (int x, int y, char ** maze) */
+/* { */
+/*   if(maze[y][++x] != 'X') */
+/*     return 1; */
+/*   else */
+/*     return 0; */
+/* } */
 
-int checkwest1 (int x, int y, char ** maze)
-{
-  if(maze[y][--x] != 'X')
-    return 1;
-  else
-    return 0;
-}
+/* int checkwest1 (int x, int y, char ** maze) */
+/* { */
+/*   if(maze[y][--x] != 'X') */
+/*     return 1; */
+/*   else */
+/*     return 0; */
+/* } */
+
+/* int isintersection (int x, int y, char ** maze) */
 
 void explore (int x, int y, int * previous, char ** maze, int countsteps, int h, int w)
 {
@@ -103,16 +105,16 @@ void explore (int x, int y, int * previous, char ** maze, int countsteps, int h,
 	  options++;
 	  *previous = NORTH;
 	  explore(x, y - 1, previous, maze,1, h, w);
-	  if (checknorth1(x,y, maze) == 1 && y != 0)
-	    options++;
-	  if (checksouth1(x,y, maze) == 1 && y < h - 1)
-	    options++;
-	  if (checkeast1(x,y, maze) == 1 && x < w - 1)
-	    options++;
-	  if (checkwest1(x,y, maze) == 1 && x != 0)
-	    options++;
-	  if (*previous == 7 && options > 1)
-	    *previous = 8;
+	  /* if (checknorth1(x,y, maze) == 1 && y != 0) */
+	  /*   options++; */
+	  /* else if (checksouth1(x,y, maze) == 1 && y < h - 1) */
+	  /*   options++; */
+	  /* if (checkeast1(x,y, maze) == 1 && x < w - 1) */
+	  /*   options++; */
+	  /* else if (checkwest1(x,y, maze) == 1 && x != 0) */
+	  /*   options++; */
+	  /* if (*previous == 7 && options > 1) */
+	  /*   *previous = 8; */
 	  if (*previous != 7)
 	    printf("S %d\n", countsteps);
 
@@ -137,16 +139,16 @@ void explore (int x, int y, int * previous, char ** maze, int countsteps, int h,
 	  options++;
 	  *previous = SOUTH;
 	  explore(x, y + 1, previous, maze,1, h ,w);
-	  if (checknorth1(x,y, maze) == 1 && y != 0)
-	    options++;
-	  if (checksouth1(x,y, maze) == 1 && y < h - 1)
-	    options++;
-	  if (checkeast1(x,y, maze) == 1 && x < w - 1)
-	    options++;
-	  if (checkwest1(x,y, maze) == 1 && x != 0)
-	    options++;
-	  if (*previous == 7 && options > 1)
-	    *previous = 8;
+	  /* if (checknorth1(x,y, maze) == 1 && y != 0) */
+	  /*   options++; */
+	  /* else if (checksouth1(x,y, maze) == 1 && y < h - 1) */
+	  /*   options++; */
+	  /* if (checkeast1(x,y, maze) == 1 && x < w - 1) */
+	  /*   options++; */
+	  /* else if (checkwest1(x,y, maze) == 1 && x != 0) */
+	  /*   options++; */
+	  /* if (*previous == 7 && options > 1) */
+	  /*   *previous = 8; */
 	  if (*previous != 7)
 	    printf("N %d\n", countsteps);
 
@@ -169,16 +171,16 @@ void explore (int x, int y, int * previous, char ** maze, int countsteps, int h,
 	  options++;
 	  *previous = EAST;
 	  explore(x + 1, y, previous, maze,1, h ,w);
-	  if (checknorth1(x,y, maze) == 1 && y != 0)
-	    options++;
-	  if (checksouth1(x,y, maze) == 1 && y < h - 1)
-	    options++;
-	  if (checkeast1(x,y, maze) == 1 && x < w - 1)
-	    options++;
-	  if (checkwest1(x,y, maze) == 1 && x != 0)
-	    options++;
-	  if (*previous == 7 && options > 1)
-	    *previous = 8;
+	  /* if (checknorth1(x,y, maze) == 1 && y != 0) */
+	  /*   options++; */
+	  /* else if (checksouth1(x,y, maze) == 1 && y < h - 1) */
+	  /*   options++; */
+	  /* if (checkeast1(x,y, maze) == 1 && x < w - 1) */
+	  /*   options++; */
+	  /* else if (checkwest1(x,y, maze) == 1 && x != 0) */
+	  /*   options++; */
+	  /* if (*previous == 7 && options > 1) */
+	  /*   *previous = 8; */
 	  if (*previous != 7)
 	    printf("W %d\n", countsteps);
 	}
@@ -200,16 +202,16 @@ void explore (int x, int y, int * previous, char ** maze, int countsteps, int h,
 	  options++;
 	  *previous = WEST;
 	  explore(x - 1, y, previous, maze,1, h ,w);
-	  if (checknorth1(x,y, maze) == 1 && y != 0)
-	    options++;
-	  if (checksouth1(x,y, maze) == 1 && y < h - 1)
-	    options++;
-	  if (checkeast1(x,y, maze) == 1 && x < w - 1)
-	    options++;
-	  if (checkwest1(x,y, maze) == 1 && x != 0)
-	    options++;
-	  if (*previous == 7 && options > 1)
-	    *previous = 8;
+	  /* if (checknorth1(x,y, maze) == 1 && y != 0) */
+	  /*   options++; */
+	  /* else if (checksouth1(x,y, maze) == 1 && y < h - 1) */
+	  /*   options++; */
+	  /* if (checkeast1(x,y, maze) == 1 && x < w - 1) */
+	  /*   options++; */
+	  /* if (checkwest1(x,y, maze) == 1 && x != 0) */
+	  /*   options++; */
+	  /* else if (*previous == 7 && options > 1) */
+	  /*   *previous = 8; */
 	  if (*previous != 7)
 	    printf("W %d\n", countsteps);
 	}
