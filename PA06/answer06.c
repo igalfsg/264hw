@@ -1,5 +1,6 @@
 #include "answer06.h"
 #include <stdio.h>
+#include <stdlib.h>
 #define NORTH -1
 #define SOUTH 1
 #define EAST 2
@@ -56,6 +57,9 @@ void explore (int x, int y, int * previous, char ** maze, int countsteps, int h,
 {
   int options = 0;
   int prev =  0;
+  int inter = 0;
+  int previn;
+  int countint;
 
   if (checknorth(x,y, maze) == 1 && y != 0)
     {
@@ -79,14 +83,22 @@ void explore (int x, int y, int * previous, char ** maze, int countsteps, int h,
 	}
     }
 
-  if (checksouth(x,y, maze) == 1 && y < h - 1)
+  if (y < h - 1 && checksouth(x,y, maze) == 1)
     {
       if (*previous == SOUTH)
 	{
+	  if(checkeast(x,y,maze) == 1 || checkwest(x, y, maze) == 1)
+	    {
+	      countint = countsteps;
+	      inter = 1;
+	      previn = *previous;
+	    }
 	  countsteps++;
 	  maze[y][x] = '.';
 	  options++;
 	  explore(x, y + 1, previous, maze,countsteps, h, w);
+	  if (inter)
+	    printdirection(previn, countint);
 	}
       else
 	{
@@ -153,6 +165,10 @@ void explore (int x, int y, int * previous, char ** maze, int countsteps, int h,
       printdirection(*previous,countsteps );
       * previous = 7;
     }
+  if (inter){
+    printdirection((-1*previn), countint);
+      }
+
 }
 
 void print_directions(char** maze, int w, int h)
@@ -176,5 +192,5 @@ void print_directions(char** maze, int w, int h)
     i++;
     }// enter the maze
   explore (x, y, prev, maze, 0, h, w);
-
+  //free(prev);
 }
