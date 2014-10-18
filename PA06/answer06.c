@@ -61,14 +61,22 @@ void explore (int x, int y, int * previous, char ** maze, int countsteps, int h,
   int previn;
   int countint;
 
-  if (checknorth(x,y, maze) == 1 && y != 0)
+  if (y != 0 && checknorth(x,y, maze) == 1  )
     {
       if (*previous == NORTH)
 	{
+	  if((x != 0 && checkwest(x,y, maze) == 1) || (x < w - 1 && checkeast(x,y, maze) == 1 ))
+	    {
+	      countint = countsteps;
+	      inter = 1;
+	      previn = *previous;
+	    }
 	  countsteps++;
 	  maze[y][x] = '.';
 	  options++;
 	  explore(x, y - 1, previous, maze,countsteps, h, w); 
+	  if (inter)
+	    printdirection(previn, countint);
 	}
       else
 	{
@@ -87,7 +95,7 @@ void explore (int x, int y, int * previous, char ** maze, int countsteps, int h,
     {
       if (*previous == SOUTH)
 	{
-	  if(checkeast(x,y,maze) == 1 || checkwest(x, y, maze) == 1)
+	  if((x != 0 && checkwest(x,y, maze) == 1) || (x < w - 1 && checkeast(x,y, maze) == 1 ))
 	    {
 	      countint = countsteps;
 	      inter = 1;
@@ -113,14 +121,22 @@ void explore (int x, int y, int * previous, char ** maze, int countsteps, int h,
 	  explore(x, y + 1, previous, maze,1, h ,w);
 	}
     }
-  if (checkeast(x,y, maze) == 1 && x < w - 1)
+  if (x < w - 1 && checkeast(x,y, maze) == 1 )
     {
       if (*previous == EAST)
 	{
+	   if( (y < h - 1 && checksouth(x,y, maze) == 1)   ||(y != 0 && checknorth(x,y, maze) == 1  )  )
+	    {
+	      countint = countsteps;
+	      inter = 1;
+	      previn = *previous;
+	    }
 	  countsteps++;
 	  maze[y][x] = '.';
 	  options++;
 	  explore(x + 1, y , previous, maze,countsteps, h, w);
+	  if (inter)
+	    printdirection(previn, countint);
 	}
       else
 	{
@@ -134,14 +150,22 @@ void explore (int x, int y, int * previous, char ** maze, int countsteps, int h,
 	  explore(x + 1, y, previous, maze,1, h ,w);
 	}
     }
-  if (checkwest(x,y, maze) == 1 && x != 0)
+  if (x != 0 && checkwest(x,y, maze) == 1)
     {
       if (*previous == WEST)
 	{
+	  if( (y < h - 1 && checksouth(x,y, maze) == 1)   ||(y != 0 && checknorth(x,y, maze) == 1  )  )
+	    {
+	      countint = countsteps;
+	      inter = 1;
+	      previn = *previous;
+	    }
 	  countsteps++;
 	  maze[y][x] = '.';
 	  options++;
 	  explore(x - 1, y , previous, maze,countsteps, h, w);
+	  if (inter)
+	    printdirection(previn, countint);
 	}
       else
 	{
