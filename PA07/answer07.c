@@ -38,7 +38,7 @@ Image * Image_load(const char * filename)
 	}
     }
     if(!err) { // We're only interested in a subset of valid bmp files
-      if (header->MAGIC_ != ECE264_NUMBER) {
+      if (header.magic_number != ECE264_NUMBER) {
 	    fprintf(stderr, "Invalid header in '%s'\n", filename);
 	    err = TRUE;
    }
@@ -130,8 +130,7 @@ Image * Image_load(const char * filename)
 int Image_save(const char * filename, Image * image)
 {
     int err = FALSE; 
-    FILE * fp = NULL;
-    uint8_t * buffer = NULL;    
+    FILE * fp = NULL;    
     size_t written = 0;
     
 
@@ -154,7 +153,7 @@ int Image_save(const char * filename, Image * image)
    }
  }
  if(!err){
-   written = fwrite(image->comment, sizeof(char) * comment_len, 1, fp);
+   written = fwrite(image->comment, sizeof(char) * header.comment_len, 1, fp);
    if(written != 1) {
      fprintf(stderr, "error could not write the full comment");
      err = TRUE;	
@@ -176,4 +175,36 @@ int Image_save(const char * filename, Image * image)
 
 }
 
+void Image_free(Image * image)
+{
+  if(image != NULL) {
+    free(image->comment); // Remember, you can always free(NULL)
+    free(image->data);
+    free(image);
+  }
+}
 
+
+void linearNormalization(int width, int height, uint8_t * intensity){
+  int min = 255;
+  int max= 0;
+  int len = width * height;
+  int i = 0;
+  while (i < len)
+    {
+      if (intensity[i] > max){
+	max = intensity[i];
+      }
+      if(intensity[i] < min)
+	min = intensity[i];
+      i++;
+    }
+  i = 0;
+  if (min != max){
+    while (i < len)
+      {
+	intensity[i] =( (intensity[i] - min) * 255.0) / (max - min);
+      }
+  }
+}
+  
