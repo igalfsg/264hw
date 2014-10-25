@@ -1,3 +1,4 @@
+
 #include "answer07.h"
 
 #include <stdlib.h>
@@ -39,27 +40,27 @@ Image * Image_load(const char * filename)
     }
     if(!err) { // We're only interested in a subset of valid bmp files
       if (header.magic_number != ECE264_NUMBER) {
-	    fprintf(stderr, "Invalid header in '%s'\n", filename);
+	    fprintf(stderr, "Invalid header in '%s', invalid magic number\n", filename);
 	    err = TRUE;
-   }
+      }
 
     // Make sure we are getting 24 bits per pixel
     if (header.width == 0 ){
-	    fprintf(stderr, "Invalid header in '%s'\n", filename);
+	    fprintf(stderr, "Invalid header in '%s', width = 0\n", filename);
 	    err = TRUE;
 
     }
 
    if (header.height == 0 ){
-	    fprintf(stderr, "Invalid header in '%s'\n", filename);
+	    fprintf(stderr, "Invalid header in '%s', height = 0\n", filename);
 	    err = TRUE;
 
     }
 
     // Make sure there is no compression
-   if (header.comment_len != 0 )
+   if (header.comment_len == 0 )
       {
-	    fprintf(stderr, "Invalid header in '%s'\n", filename);
+	    fprintf(stderr, "Invalid header in '%s', comment-len = 0\n", filename);
 	    err = TRUE;
       }
 	
@@ -77,9 +78,15 @@ Image * Image_load(const char * filename)
    if(!err) { // Init the Image struct
    tmp_im->width = header.width;
    tmp_im->height = header.height;
+   tmp_im->comment = NULL;
+   tmp_im->data = NULL;
    tmp_im->comment = malloc(sizeof(char)*header.comment_len);
+   if(tmp_im->comment == NULL){
+     fprintf(stderr, "Failed to allocate im structure\n");
+     err = TRUE;
+   }
    tmp_im->data = malloc(sizeof(uint8_t)*header.width * header.height);
-   if(tmp_im->comment == NULL || tmp_im->data  == NULL)
+   if(tmp_im->data  == NULL)
      {
        fprintf(stderr, "Failed to allocate im structure\n");
        err = TRUE;
@@ -91,7 +98,7 @@ Image * Image_load(const char * filename)
        fprintf(stderr, "failed to read entire comment\n");
        err = TRUE;
      }
-     if(tmp_im->comment[header.comment_len-1] != '\0'){
+     else if(tmp_im->comment[header.comment_len-1] != '\0'){
        fprintf(stderr, "failed to read entire comment\n");
        err = TRUE;
      }
@@ -104,7 +111,9 @@ Image * Image_load(const char * filename)
        fprintf(stderr, "failed to read entire picutre\n");
        err = TRUE;
      }
-     if(!feof(fp)){
+     uint8_t byte;
+     read = fread(&byte,sizeof(uint8_t),1,fp);
+     if(read != 0){
        fprintf(stderr, "didnt reach end of file\n");
        err = TRUE;
      }
@@ -204,6 +213,7 @@ void linearNormalization(int width, int height, uint8_t * intensity){
     while (i < len)
       {
 	intensity[i] =( (intensity[i] - min) * 255.0) / (max - min);
+	i++;
       }
   }
 }
