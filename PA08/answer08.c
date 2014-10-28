@@ -38,7 +38,28 @@ int List_length (List * list)
   list = list->next;
   return count;
 }
+List * List_merge (List *lhs, List * rhs, int(*compar)(const char *, const char *))
+{
+  List * complete;
+  while(rhs != NULL && lhs != NULL)
+    {
+      if()//compare if right is bigger than left
+	{
+	  complete = rhs;//hpw do I do it so complete doesnt reset each time
+	  rhs = rhs->next;
+	}
+      else
+	{
+	  //flip code inside if for lhs
+	}
+      
+    }
+  //fill rest of linked list with the leftovers from other side
 
+  return complete;
+	
+
+}
 
 List * List_sort (List * list, int (*compar)(const char *, const char*))
 {
