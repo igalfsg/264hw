@@ -8,9 +8,9 @@
 
 List * List_createNode(const char * str)
 {
-  List * node;
-  node->str = str;
-  node->ext = NULL;
+  List * node = malloc(sizeof(List));
+  node->str = strdup(str);
+  node->next = NULL;
   return node;
 }
 
@@ -22,41 +22,88 @@ void Node_destroy(List * node)
   }
 }
 
-}
 
-void List_Destroy (List * list){
+void List_destroy (List * list){
   if(list != NULL)
-    list_destroy_recursive(list->next);
+    List_destroy(list->next);
   Node_destroy (list);
 }
 
 int List_length (List * list)
 {
   int count = 0;
-  if (list != NULL)
+  while (list != NULL){
     count++;
-  list = list->next;
+    list = list->next;
+  }
   return count;
 }
 List * List_merge (List *lhs, List * rhs, int(*compar)(const char *, const char *))
 {
+  //List * head;
   List * complete;
-  while(rhs != NULL && lhs != NULL)
-    {
-      if()//compare if right is bigger than left
-	{
-	  complete = rhs;//hpw do I do it so complete doesnt reset each time
-	  rhs = rhs->next;
-	}
-      else
-	{
-	  //flip code inside if for lhs
-	}
-      
-    }
-  //fill rest of linked list with the leftovers from other side
+  //List *  tmp;
+  //int first = 0; 
 
-  return complete;
+  if (rhs == NULL)
+    return lhs;
+  else if (lhs == NULL)
+    return rhs;
+
+
+if(compar(rhs->str, lhs->str) < 0)//compare if right is smaller than left
+  {
+    complete = rhs;
+    complete->next = List_merge (lhs, rhs->next, compar);
+  }
+ else
+   {
+     complete = lhs;
+     complete->next = List_merge (rhs, lhs->next, compar);
+   }
+ return complete;
+  /* while(rhs != NULL && lhs != NULL) */
+  /*   { */
+  /*     if(compar(rhs->str, lhs->str) < 0)//compare if right is smaller than left */
+  /* 	{ */
+  /* 	  tmp = rhs->next;  */
+  /* 	  rhs->next = NULL; */
+  /* 	  if(first == 0) */
+  /* 	    { */
+  /* 	      complete = rhs;//hpw do I do it so complete doesnt reset each time */
+  /* 	       head = complete; */
+  /* 	      first = 1; */
+  /* 	    } */
+  /* 	  complete->next = rhs; */
+  /* 	  rhs = tmp; */
+  /* 	} */
+  /*     else */
+  /* 	{ */
+  /* 	  tmp = lhs->next;  */
+  /* 	  lhs->next = NULL; */
+  /* 	  if(first == 0) */
+  /* 	    { */
+  /* 	      complete = lhs;//hpw do I do it so complete doesnt reset each time */
+  /* 	      head = complete; */
+  /* 	      first = 1; */
+  /* 	    } */
+  /* 	  complete->next = lhs; */
+  /* 	  lhs = tmp; */
+  /* 	  //flip code inside if for lhs */
+  /* 	} */
+      
+  /*   } */
+
+  /* if (rhs == NULL) */
+  /*   { */
+  /*     complete->next = lhs; */
+  /*   } */
+  /* else */
+  /*   complete->next = rhs; */
+
+  /* //fill rest of linked list with the leftovers from other side */
+
+  /* return head; */
 	
 
 }
@@ -64,6 +111,7 @@ List * List_merge (List *lhs, List * rhs, int(*compar)(const char *, const char 
 List * List_sort (List * list, int (*compar)(const char *, const char*))
 {
   List * itr = list;
+  if (list != NULL){
   List * newH = list->next;
   int i;
   int len = List_length (list);
@@ -78,12 +126,12 @@ List * List_sort (List * list, int (*compar)(const char *, const char*))
   itr->next = NULL;
 
   //sort
-  newH = List_sort (newH, compare);///IDK how to pass compare
-  itr = List_sort (list, compare);///IDK how to pass compare
+  newH = List_sort (newH, compar);///IDK how to pass compare
+  itr = List_sort (list, compar);///IDK how to pass compare
 
   //merge
-  list = List_merge (newH, itr, compare);//IDK how to pass compare
-
+  list = List_merge (newH, itr, compar);//IDK how to pass compare
+  }
   return list;
 
 }
