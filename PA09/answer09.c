@@ -86,7 +86,7 @@ BusinessNode * load_tree_from_file (char * filename)
   if (x == NULL)
     return NULL;
   buffer = malloc( 2000 * sizeof(char));
-  while (fgets(buffer, 2000, x) != NULL);
+  while (fgets(buffer, 2000, x) != NULL)
   {
     secondbuffer = explode (buffer, "\t", &leng);
     stars = strdup(secondbuffer[0]);
@@ -100,6 +100,7 @@ BusinessNode * load_tree_from_file (char * filename)
     root = tree_insert(node, root); 
   }
   free(buffer);
+  fclose (x);
   return root;
 
 }
