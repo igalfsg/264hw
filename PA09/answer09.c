@@ -1,4 +1,7 @@
 #include "answer09.h"
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
 
 BusinessNode * create_node(char * stars, char * name, char * address)
 {
@@ -7,46 +10,33 @@ BusinessNode * create_node(char * stars, char * name, char * address)
   t -> name = name;
   t -> stars = stars;
   t -> address = address;
+  t -> right = NULL;
+  t -> left = NULL;
   return t;
 }
 
-BusinessNode * tree_instert (BusinessNode * node, BusinessNode * root)
+BusinessNode * tree_insert (BusinessNode * node, BusinessNode * root)
 {
   if (root == NULL)
-    return (node);
+    return node;
+  if (node == NULL)
+    return root;
   if (strcmp(node->name ,root->name) <= 0)//go left
     {
-      root->left = (tree_instert(root->left, node));
+      root->left = (tree_insert(node, root->left));
       return root;
     }
   else//go right
     {
-      root->right = (tree_instert(root->right, node));
+      root->right = (tree_insert( node, root->right));
       return root;
     }
 
 }
 
-/* void explode (char * buffer, char * name, char * stars, char * address) */
-/* { */
-/*   int letters = 0; */
-/*   int tempind = 0; */
-/*   char * first = buffer; */
-/*   while ((strchr('\t',buffer[tempind])) == NULL) */
-/*     { */
-/*       letters++; */
-/*       tempind++; */
-/*     } */
-/*   name = malloc((letters + 1) * sizeof(char)); */
-/*   memcpy(name,first,(sizeof(char)*letters)); */
-/*   name[letters] = '\0'; */
-/*   first +=  (sizeof(char)*(1 + letters)); */
-/*   letters = 0; */
-
-/* } */
 
 
-char * * explode(const char * str, const char * delims)
+char * * explode(const char * str, const char * delims, int * len)
 {
   int ind = 0; 
   int numdelim = 0;
@@ -63,6 +53,7 @@ char * * explode(const char * str, const char * delims)
     }//end counting of delimeters
   char ** dest = malloc((numdelim + 1) * sizeof(char*));
   first = str;
+  *len = numdelim + 1;
   for(ind = 0; ind <= numdelim; ind ++){
      
     while ((strchr(delims,str[tempind])) == NULL)
@@ -87,26 +78,41 @@ BusinessNode * load_tree_from_file (char * filename)
   BusinessNode * root = NULL;
   char * name;
   char * stars;
+  int leng;
   char * address;
   char * buffer;
   char ** secondbuffer;
-  buffer = malloc( 2000 * sizeof(char));
   FILE * x = fopen(filename, "r");
+  if (x == NULL)
+    return NULL;
+  buffer = malloc( 2000 * sizeof(char));
   while (fgets(buffer, 2000, x) != NULL);
   {
-    secondbuffer = explode (buffer, "\t");
-    stars = secondbuffer[0];//change this to strdup
-    name = secondbuffer[1];
-    address = secondbuffer[2];
+    secondbuffer = explode (buffer, "\t", &leng);
+    stars = strdup(secondbuffer[0]);
+    name = strdup(secondbuffer[1]);
+    address =strdup(secondbuffer[2]);
+    free(secondbuffer[0]);
+    free(secondbuffer[1]);
+    free(secondbuffer[2]);
+    free(secondbuffer);
     BusinessNode * node = create_node(stars, name, address);
-    root = tree_instert(node, root); 
+    root = tree_insert(node, root); 
   }
   free(buffer);
   return root;
 
 }
 
-
+void print_node(BusinessNode * node)
+{
+  printf("%s\n", node->name);
+  printf("stars:\n");
+  printf("%s\n",node->stars);
+  printf("address:\n");
+  printf("%s\n",node->address);
+  return;
+}
 BusinessNode * tree_search_name(char * name, BusinessNode * root)
 {
 
@@ -125,17 +131,6 @@ BusinessNode * tree_search_name(char * name, BusinessNode * root)
       return root;
     }
 }
-
-void print_node(BusinessNode * node)
-{
-  printf("%s\n", node->name);
-  printf("stars:\n");
-  printf("%s\n",node->stars);
-  printf("address:\n");
-  printf("%s\n",node->address);
-  return;
-}
-
 void destroy_tree(BusinessNode * root)
 {
   if (root == NULL){
@@ -147,5 +142,6 @@ void destroy_tree(BusinessNode * root)
   free(root->stars);
   free(root->address);
   free(root);
+  return;
 }
 
