@@ -66,9 +66,13 @@ Stack * Stack_create()
  */
 
 void List_destroy (StackNode * list){
-  if(list != NULL)
-    List_destroy(list->next);
-  HuffNode_destroy(list->tree);
+  if(list == NULL)
+    return;
+  List_destroy(list->next);
+  if (list -> tree != NULL)
+    {
+      HuffNode_destroy(list->tree);
+    }
   free(list);
   return;
 }
@@ -80,6 +84,7 @@ void Stack_destroy(Stack * stack)
       return;
     }
   List_destroy(stack->head);
+  free(stack);
   return;
 }
 
@@ -107,11 +112,18 @@ int Stack_isEmpty(Stack * stack)
  */
 HuffNode * Stack_popFront(Stack * stack)
 {
+  if(stack == NULL)
+    {
+      return NULL;
+    }
+  if(stack -> head == NULL)
+    {
+      return NULL;
+    }
   HuffNode * n;
   StackNode * s = stack->head;
   n = s->tree;
-  StackNode * p = s->next;
-  stack->head = p;
+  stack->head = s->next;
   free (s);
   return n;
 }
@@ -147,10 +159,10 @@ void Stack_popPopCombinePush(Stack * stack)
 {
   HuffNode * n1 = Stack_popFront(stack);
   HuffNode * n2 = Stack_popFront(stack);
-  int num = n1->value + n2->value;
-  HuffNode * root = HuffNode_create(num);
-  root->left = n1;
-  root->right = n2;
+  //int num = n1->value + n2->value;
+  HuffNode * root = HuffNode_create(0);
+  root->right = n1;
+  root->left = n2;
   Stack_pushFront(stack, root);
   return;
 }
@@ -166,7 +178,7 @@ HuffNode * HuffTree_readTextHeader(FILE * fp)
   Stack * s = Stack_create();
   while (ch != '\n')
     {
-      if (ch= '1')
+      if (ch == '1')
 	{
 	  ch = fgetc(fp);
 	  HuffNode * huff = HuffNode_create(ch);
@@ -174,11 +186,16 @@ HuffNode * HuffTree_readTextHeader(FILE * fp)
 	}
       else if (ch == '0')
 	{
+	  if(Stack_isEmpty(s-> head -> next))
+	    {
+	      break;
+	    }
 	  Stack_popPopCombinePush(s);
 	}
       ch = fgetc(fp);
     }
   HuffNode * tree = Stack_popFront(s);
+  Stack_destroy (s);
   return tree;
 }
 
@@ -187,7 +204,51 @@ HuffNode * HuffTree_readTextHeader(FILE * fp)
  * You will need to (conceptually) read a file a bit at a time. See the README
  * for hints on how to do this.
  */
+
+int get_bit (FILE * fp, unsigned char * pezarr, int * pez_number)
+{
+  if (*pez_number == 0){//we are empty
+    int ch = fgetc(fp);
+    if(ch == -1)
+      return -1;//EOF
+    pezarr = ch;
+    *pez_number = 8;
+  }
+  //ready to dispense bit number *pez_number - 1
+  int bit_no = * pez_number - 1;
+  *pez_number -= 1;
+  return (*pez_arr & (<< bit_no)) >>bit_no;
+} 
+
+
 HuffNode * HuffTree_readBinaryHeader(FILE * fp){
-  HuffNode * node = HuffNode_create('1');
-  return node;
+  int bit;
+  unsigned char  byte;
+  unsigned char ch;
+  int number_byte = 0;
+  bit = get_bit (fp, & byte, & number_byte);
+  /////////////////////////////////////////////////////////////////////////////////////////////////
+ while (bit != -1)
+    {
+      
+      if (bit == 1)
+	{
+	  ch = fgetc(fp);//change to get byte from bits
+	  HuffNode * huff = HuffNode_create(ch);
+	  Stack_pushFront(s, huff);
+	}
+      else if (bit == 0)
+	{
+	  if(Stack_isEmpty(s-> head -> next))
+	    {
+	      break;
+	    }
+	  Stack_popPopCombinePush(s);
+	}
+       bit = get_bit (fp, & byte, & number_byte);
+    }
+  HuffNode * tree = Stack_popFront(s);
+  Stack_destroy (s);
+  return tree;
+  ///////////////////////////
 }
