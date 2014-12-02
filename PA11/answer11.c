@@ -1,4 +1,4 @@
-#include "answer09.h"
+#include "answer11.h"
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
@@ -8,7 +8,7 @@
  */
 HuffNode * HuffNode_create(int value)
 {
-  huffNode * n;
+  HuffNode * n;
   n = malloc(sizeof(HuffNode));
   n->value = value;
   n->left = NULL;
@@ -65,7 +65,7 @@ Stack * Stack_create()
  * Also, you must safely do nothing if stack == NULL. 
  */
 
-void List_destroy (List * list){
+void List_destroy (StackNode * list){
   if(list != NULL)
     List_destroy(list->next);
   HuffNode_destroy(list->tree);
@@ -160,11 +160,34 @@ void Stack_popPopCombinePush(Stack * stack)
 /**
  * Read a Huffman Coding Tree (in text format) from 'fp'.
  */
-HuffNode * HuffTree_readTextHeader(FILE * fp);
+HuffNode * HuffTree_readTextHeader(FILE * fp)
+{ 
+  int ch = fgetc(fp);
+  Stack * s = Stack_create();
+  while (ch != '\n')
+    {
+      if (ch= '1')
+	{
+	  ch = fgetc(fp);
+	  HuffNode * huff = HuffNode_create(ch);
+	  Stack_pushFront(s, huff);
+	}
+      else if (ch == '0')
+	{
+	  Stack_popPopCombinePush(s);
+	}
+      ch = fgetc(fp);
+    }
+  HuffNode * tree = Stack_popFront(s);
+  return tree;
+}
 
 /**
  * Read a Huffman Coding Tree (in binary format) from 'fp'.
  * You will need to (conceptually) read a file a bit at a time. See the README
  * for hints on how to do this.
  */
-HuffNode * HuffTree_readBinaryHeader(FILE * fp);
+HuffNode * HuffTree_readBinaryHeader(FILE * fp){
+  HuffNode * node = HuffNode_create('1');
+  return node;
+}
