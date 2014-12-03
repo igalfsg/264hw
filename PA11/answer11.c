@@ -186,7 +186,7 @@ HuffNode * HuffTree_readTextHeader(FILE * fp)
 	}
       else if (ch == '0')
 	{
-	  if(Stack_isEmpty(s-> head -> next))
+	  if((s-> head -> next) == NULL )
 	    {
 	      break;
 	    }
@@ -208,23 +208,36 @@ HuffNode * HuffTree_readTextHeader(FILE * fp)
 int get_bit (FILE * fp, unsigned char * pezarr, int * pez_number)
 {
   if (*pez_number == 0){//we are empty
-    int ch = fgetc(fp);
-    if(ch == -1)
+    *pezarr = fgetc(fp);
+    if(*pezarr == -1)
       return -1;//EOF
-    pezarr = ch;
     *pez_number = 8;
   }
   //ready to dispense bit number *pez_number - 1
   int bit_no = * pez_number - 1;
   *pez_number -= 1;
-  return (*pez_arr & (<< bit_no)) >>bit_no;
-} 
+  return (*pezarr & (1 << bit_no)) >> bit_no;
+}
+unsigned char get_byte (FILE * fp, unsigned char * pezarr, int * pez_number)
+{
+  int i;
+  int bit;
+  unsigned char ch = 0;
+  for(i = 0; i < 8; i++)
+    {
+      bit = get_bit (fp, pezarr, pez_number);
+      
+      ch = (ch<<1) | bit;
+    }
+  return ch;
+}
 
 
 HuffNode * HuffTree_readBinaryHeader(FILE * fp){
-  int bit;
-  unsigned char  byte;
-  unsigned char ch;
+  int bit = 0;
+  unsigned char  byte= 0;
+  unsigned char ch = 0;
+  Stack * s = Stack_create();
   int number_byte = 0;
   bit = get_bit (fp, & byte, & number_byte);
   /////////////////////////////////////////////////////////////////////////////////////////////////
@@ -233,13 +246,13 @@ HuffNode * HuffTree_readBinaryHeader(FILE * fp){
       
       if (bit == 1)
 	{
-	  ch = fgetc(fp);//change to get byte from bits
+	  ch = get_byte (fp, & byte, & number_byte);;//change to get byte from bits
 	  HuffNode * huff = HuffNode_create(ch);
 	  Stack_pushFront(s, huff);
 	}
       else if (bit == 0)
 	{
-	  if(Stack_isEmpty(s-> head -> next))
+	  if((s-> head -> next) == NULL)
 	    {
 	      break;
 	    }
