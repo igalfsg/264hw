@@ -13,6 +13,17 @@ functions. Your solution should be short: between 50 and 150 lines of
 code, including lines used for spacing.
 
 // ~ Learning Goals ~ //
+                  ___           ___           ___ 
+      ___        /\  \         /\  \         /\__\
+     /\  \      /::\  \       /::\  \       /:/  /
+     \:\  \    /:/\:\  \     /:/\:\  \     /:/  / 
+     /::\__\  /:/  \:\  \   /::\~\:\  \   /:/  /  
+  __/:/\/__/ /:/__/_\:\__\ /:/\:\ \:\__\ /:/__/   
+ /\/:/  /    \:\  /\ \/__/ \/__\:\/:/  / \:\  \   
+ \::/__/      \:\ \:\__\        \::/  /   \:\  \  
+  \:\__\       \:\/:/  /        /:/  /     \:\  \ 
+   \/__/        \::/  /        /:/  /       \:\__\
+                 \/__/         \/__/         \/__/
 
 The main learning goals are five-fold, and all of them equally
 important. You must learn:
